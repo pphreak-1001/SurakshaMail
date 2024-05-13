@@ -1,4 +1,4 @@
-# SurakshaMail
+# सुरक्षाMail
 
 Access page here: https://suraksha-mail.vercel.app/
 
