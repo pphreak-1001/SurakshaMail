@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Compromise Checker</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #000;
+            color: black;
+        }
+
+        .matrix-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://miro.medium.com/v2/resize:fit:679/1*TJXwjRDZ4C3QoGVeifBrtw.gif') repeat;
+            z-index: -1;
+            pointer-events: none;
+            animation: animateMatrix 30s linear infinite;
+        }
+
+        @keyframes animateMatrix {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+
+        .container {
+            max-width: 500px;
+            width: 90%;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1, h2 {
+            font-weight: 700;
+            color: black; /* Matrix green color */
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="text"], input[type="submit"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: calc(100% - 22px);
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        ul {
+            text-align: left;
+            margin-left: 20px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: #f00;
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg"></div>
+    <div class="container">
+        <h1>Email Compromise Checker</h1>
+        <form method="post">
+            <label for="email">Enter your email address:</label><br>
+            <input type="text" id="email" name="email"><br>
+            <input type="submit" value="Check">
+        </form>
+        {% if email %}
+            <h2>Results for {{ email }}:</h2>
+            {% if is_compromised %}
+                <p>The email address has been compromised in the following breaches:</p>
+                <ul>
+                    {% for breach in compromised_breaches %}
+                        <li>{{ breach['title'] }} - {{ breach['breachDate'] }}</li>
+                    {% endfor %}
+                </ul>
+                <p><strong>Change your password urgently!</strong></p>
+                <form action="/generate_password" method="post">
+                    <input type="hidden" name="email" value="{{ email }}">
+                    <input type="submit" value="Generate Password">
+                </form>
+                {% if password %}
+                    <p>Generated secure password: {{ password }}</p>
+                {% endif %}
+            {% else %}
+                <p>The email address has not been compromised.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
