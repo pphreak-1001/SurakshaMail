@@ -1,6 +1,6 @@
 # SurakshaMail
 
-![Project Image](project-image-url)
+Access page here: https://suraksha-mail.vercel.app/
 
 ---
 
