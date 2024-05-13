@@ -60,5 +60,3 @@ def generate_password():
     email = request.form['email']
     password = generate_secure_password()  # Generate a secure password
     return render_template('index.html', email=email, is_compromised=True, compromised_breaches=[], password=password)
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=9856)
